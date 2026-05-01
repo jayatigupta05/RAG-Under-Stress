@@ -1,0 +1,43 @@
+Transformers in Deep Learning
+
+Overview:
+Transformers are a neural network architecture introduced in 2017 in the paper "Attention Is All You Need". They are designed for processing sequential data, especially natural language.
+
+Core Idea:
+Transformers rely on a mechanism called self-attention, which allows the model to weigh the importance of different words in a sentence relative to each other.
+
+Why Transformers Replaced RNNs:
+- RNNs process tokens sequentially → slow and hard to parallelize
+- Transformers process all tokens at once → faster training
+- Better at capturing long-range dependencies
+
+Key Components:
+
+1. Self-Attention:
+Each word attends to every other word in the sequence.
+Example:
+Sentence: "The cat sat on the mat"
+The word "sat" attends to "cat" to understand who is performing the action.
+
+2. Positional Encoding:
+Since transformers process tokens in parallel, positional encoding adds information about word order.
+
+3. Multi-Head Attention:
+Multiple attention mechanisms run in parallel to capture different types of relationships.
+
+4. Encoder-Decoder Architecture:
+- Encoder: processes input
+- Decoder: generates output
+
+Applications:
+- GPT (text generation)
+- BERT (understanding tasks)
+- Translation systems
+- Chatbots
+
+Limitations:
+- High computational cost
+- Requires large datasets
+
+Summary:
+Transformers are the foundation of modern large language models due to their ability to efficiently model relationships in data.

@@ -1,0 +1,42 @@
+Embeddings in Machine Learning
+
+Overview:
+Embeddings are dense numerical vector representations of data such as text, images, or audio.
+
+Core Idea:
+Embeddings map data into a high-dimensional space where semantically similar items are located close together.
+
+Why Embeddings Matter:
+- Enable semantic search (search by meaning, not keywords)
+- Used in recommendation systems
+- Essential for retrieval in RAG systems
+
+How Text Embeddings Work:
+1. Input text is passed through a model
+2. The model outputs a fixed-length vector
+3. This vector captures semantic meaning
+
+Similarity Measurement:
+Cosine similarity is commonly used to measure similarity between vectors.
+
+Example:
+"I love dogs"
+"I like puppies"
+→ These sentences have similar embeddings because their meanings are similar.
+
+Another Example:
+"Apple" (fruit) vs "Apple" (company)
+→ Context determines embedding meaning
+
+Common Models:
+- Word2Vec
+- GloVe
+- Transformer-based embeddings (e.g., BERT embeddings)
+
+Challenges:
+- Context sensitivity
+- High dimensionality
+- Computational cost
+
+Summary:
+Embeddings are the backbone of semantic understanding in modern machine learning systems.

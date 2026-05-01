@@ -1,0 +1,50 @@
+Vector Databases
+
+Overview:
+A vector database is a specialized system designed to store, index, and search vector embeddings efficiently.
+
+Core Idea:
+Instead of keyword matching, vector databases perform similarity search to find semantically related items.
+
+How It Works:
+
+Step 1: Embedding Creation
+Text or data is converted into vector representations.
+
+Step 2: Storage
+Vectors are stored in the database with associated metadata.
+
+Step 3: Query Processing
+User query is converted into an embedding.
+
+Step 4: Similarity Search
+The database finds vectors closest to the query using metrics like cosine similarity.
+
+Key Features:
+- Fast approximate nearest neighbor (ANN) search
+- Scalable to millions of vectors
+- Supports metadata filtering
+
+Popular Vector Databases:
+- FAISS (Facebook AI Similarity Search)
+- Pinecone
+- Weaviate
+- Chroma
+
+Use Cases:
+- Semantic search
+- Recommendation systems
+- RAG pipelines
+- Image similarity search
+
+Example:
+Query: "cute animals"
+→ Returns: "puppies", "kittens", "baby animals"
+
+Challenges:
+- Indexing large datasets
+- Trade-off between speed and accuracy
+- Memory usage
+
+Summary:
+Vector databases are critical for enabling efficient semantic retrieval in modern AI systems.

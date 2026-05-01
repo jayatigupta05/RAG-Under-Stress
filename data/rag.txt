@@ -1,0 +1,51 @@
+Retrieval-Augmented Generation (RAG)
+
+Overview:
+Retrieval-Augmented Generation (RAG) is a technique that enhances language models by combining them with external knowledge retrieval systems.
+
+Problem with Standard LLMs:
+- Trained on static datasets
+- Cannot access real-time or private data
+- May produce hallucinations (confident but incorrect answers)
+
+Core Idea:
+Instead of relying only on internal parameters, RAG retrieves relevant information from external documents and uses it during generation.
+
+RAG Pipeline:
+
+Step 1: Document Processing
+Documents are split into smaller chunks and converted into embeddings.
+
+Step 2: Storage
+Embeddings are stored in a vector database.
+
+Step 3: Retrieval
+Given a query, the system finds the most relevant chunks using similarity search.
+
+Step 4: Generation
+The retrieved chunks are passed as context to a language model to generate the final answer.
+
+Example Flow:
+Query: "Why do transformers use attention?"
+→ Retrieve chunk about self-attention
+→ Feed chunk to LLM
+→ Generate accurate answer
+
+Advantages:
+- Reduces hallucinations
+- Improves factual grounding
+- Enables domain-specific knowledge
+- Works with private/company data
+
+Challenges:
+- Retrieval quality affects output
+- Poor chunking leads to bad answers
+- Latency increases due to retrieval step
+
+Real-World Use Cases:
+- Customer support chatbots
+- Internal knowledge assistants
+- Research assistants
+
+Summary:
+RAG makes language models more reliable by grounding them in external knowledge sources.
