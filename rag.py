@@ -10,7 +10,8 @@ DATA_DIR = "data"
 FAISS_INDEX_PATH = "faiss_index" 
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"                      
 OLLAMA_MODEL = "phi3:mini"
-
+LLM_BACKEND = "ollama"   # or "hf"
+    
 # ── 1. Embeddings (loaded once) ───────────────────────────────────────────────
 embeddings = HuggingFaceEmbeddings(
     model_name=EMBED_MODEL,
@@ -58,7 +59,24 @@ else:
     print("  Index saved to disk.")
 
 # ── 3. LLM ───────────────────────────────────────────────────────────────────
-llm = OllamaLLM(model=OLLAMA_MODEL)
+if LLM_BACKEND == "ollama":
+    from langchain_ollama import OllamaLLM # type: ignore
+    llm = OllamaLLM(model="phi3:mini")
+
+elif LLM_BACKEND == "hf":
+    from langchain_community.llms import HuggingFaceHub
+    import os
+
+    llm = HuggingFaceHub(
+        repo_id="mistralai/Mistral-7B-Instruct-v0.3",
+        huggingfacehub_api_token=os.getenv("HUGGINGFACEHUB_API_TOKEN"),
+        model_kwargs={
+            "temperature": 0.2,
+            "max_new_tokens": 200
+        }
+    )
+else:
+    raise ValueError("Invalid LLM_BACKEND")
 
 print("Warming up model...")
 try:
