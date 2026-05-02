@@ -1,84 +1,49 @@
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.llms import Ollama
 import os
-import logging
 
+# 1. Load documents
+docs = []
+for file in os.listdir("data"):
+    if file.endswith(".txt"):
+        loader = TextLoader(f"data/{file}")
+        docs.extend(loader.load())
 
-logging.getLogger("transformers").setLevel(logging.ERROR)
-logging.getLogger("sentence_transformers").setLevel(logging.ERROR)
+# 2. Chunk
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=50
+)
+chunks = splitter.split_documents(docs)
 
-# Initialize embeddings
+# 3. Embeddings + Vector DB
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
+db = FAISS.from_documents(chunks, embeddings)
 
-# Check if FAISS index already exists
-if os.path.exists("faiss_index"):
-    print("Loading existing FAISS index...")
-    db = FAISS.load_local(
-        "faiss_index",
-        embeddings,
-        allow_dangerous_deserialization=True
-    )
-else:
-    print("Building FAISS index (first run only)...")
-
-    # 1. Load documents
-    docs = []
-    for file in os.listdir("data"):
-        if file.endswith(".txt"):
-            loader = TextLoader(f"data/{file}")
-            docs.extend(loader.load())
-
-    # 2. Chunk (smaller + faster)
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=350,
-        chunk_overlap=50
-    )
-    chunks = splitter.split_documents(docs)
-
-    # 3. Create and save vector DB
-    db = FAISS.from_documents(chunks, embeddings)
-    db.save_local("faiss_index")
-
-# 4. LLM
-llm = Ollama(model="phi3")
-
-print("Warming up model...")
-llm.invoke("Hello")
+# 4. LLM (Ollama for now)
+llm = Ollama(model="phi3:mini")
 
 # 5. Query loop
 while True:
     query = input("\nAsk something: ")
 
-    results = db.similarity_search_with_score(query, k=3)
-
-    filtered_results = []
-
-    if len(filtered_results) == 0:
-        context = ""
-    else:
-        context = "\n\n".join([doc.page_content for doc in filtered_results])
-
-    # Optional: show retrieved chunks (great for demo)
-    # for i, r in enumerate(results):
-    #     print(f"\n--- Chunk {i+1} ---\n{r.page_content}")
+    results = db.similarity_search(query, k=4)
+    context = "\n\n".join([r.page_content for r in results])
 
     prompt = f"""
-    Answer ONLY using the context below.
-If the answer is not there, say "I don't know.
-- Use ONLY the provided context
-- If the context is empty OR does not contain the answer, respond EXACTLY with: I don't know
-- Do NOT use any other knowledge outside of what is provided in the context
+You are a strict assistant.
+Answer ONLY using the context below.
+If the answer is not there, say "I don't know."
 
 Context:
 {context}
 
 Question: {query}
-
 Answer:
 """
 
