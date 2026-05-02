@@ -74,6 +74,9 @@ If the answer is not there, say "I don't know.
 - Use ONLY the provided context
 - If the context is empty OR does not contain the answer, respond EXACTLY with: I don't know
 - Do NOT use any other knowledge outside of what is provided in the context
+- Maximum 2–3 sentences
+- Be precise, not descriptive
+- If the question is vague, answer using the most relevant concept only
 
 Context:
 {context}
@@ -96,7 +99,7 @@ while True:
         print("Bye!")
         break
 
-    results = db.similarity_search(query, k=4)             
+    results = db.similarity_search(query, k=3)             
 
     if not results:
         print("Answer: I don't know (no relevant context found).")
