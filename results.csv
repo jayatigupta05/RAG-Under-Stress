@@ -1,0 +1,11 @@
+Query,Type,Retrieved Relevant,Answer Correct,Failure Type
+What is RAG?,Factual,Yes,Yes,None
+What is a vector database?,Factual,Yes,Yes,None
+What are embeddings?,Factual,Yes,Yes,None
+How do vector databases and embeddings work together?,Multi-hop,Yes,Yes,None
+How do embeddings help RAG systems?,Multi-hop,Yes,Yes,None
+Why is it useful?,Ambiguous,Yes,Partial,Overly verbose
+How does it work?,Ambiguous,Yes,Partial,Overly verbose
+What is ML?,Out-of-scope,Yes,Yes,None
+Who is Elon Musk?,Out-of-scope,No,Yes,None
+What is Python programming?,Out-of-scope,No,Yes,None
